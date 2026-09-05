@@ -1,0 +1,5 @@
+# CPU-only local embedding runtime.
+# FastEmbed uses ONNX Runtime and does not require PyTorch/CUDA.
+# Pin tqdm for compatibility with the Hugging Face Hub import path used by this stack.
+fastembed==0.8.0
+tqdm==4.69.1

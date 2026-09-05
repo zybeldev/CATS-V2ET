@@ -1,0 +1,48 @@
+# Secrets / local configuration
+.env
+.env.*
+!.env.example
+!.env.local.example
+
+# Python environments
+.venv/
+venv/
+env/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Runtime state and generated evidence
+.cats_runtime/
+.cats_ui_evidence/
+run_reports/
+
+# Logs
+*.log
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Credentials / keys
+*.pem
+*.key
+*.p12
+*.pfx
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Temporary archives
+*.zip
+
+# Windows download metadata
+*:Zone.Identifier

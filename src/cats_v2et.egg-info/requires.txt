@@ -1,0 +1,16 @@
+pydantic>=2.7
+pydantic-settings>=2.2
+sqlalchemy>=2.0
+psycopg[binary]>=3.1
+alembic>=1.13
+alpaca-py>=0.42
+openai>=1.0
+
+[dev]
+pytest>=8.0
+
+[langgraph]
+langgraph<2,>=1.2
+
+[mcp]
+mcp<2,>=1.28

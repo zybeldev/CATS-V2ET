@@ -1,0 +1,40 @@
+[project]
+name = "cats-v2et"
+version = "0.1.0"
+description = "CATS V2ET Technology Evaluation Capstone Implementation"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.7",
+    "pydantic-settings>=2.2",
+    "sqlalchemy>=2.0",
+    "psycopg[binary]>=3.1",
+    "alembic>=1.13",
+    "alpaca-py>=0.42",
+    "openai>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+mcp = [
+    "mcp>=1.28,<2",
+]
+langgraph = [
+    "langgraph>=1.2,<2",
+]
+qwen = [
+    "transformers>=5.16,<6",
+    "accelerate>=1.0",
+    "safetensors>=0.4",
+    "huggingface-hub>=0.25",
+    "gptqmodel>=7.3,<8",
+]
+
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
