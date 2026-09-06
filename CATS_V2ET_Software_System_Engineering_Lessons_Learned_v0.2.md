@@ -5,6 +5,50 @@
 
 ---
 
+# Engineering Cycles Followed
+
+The lessons in this document emerged while CATS moved through two related engineering views: the practical Software System Design cycle used to turn architecture into working software, and the broader Software System Engineering cycle that governs the system from definition through mature operation.
+
+## Software System Design Cycle
+
+```text
+Software System Design
+→ Software System Architecture Design
+→ Software Engineering Design
+→ Software System Database / Persistence Design
+→ Canonical Implementation
+→ Technological Implementation
+→ Testing / Validation
+→ Feedback into Software System Design
+```
+
+This shorter cycle captures the repeated design-to-implementation path used during CATS engineering. Feedback from implementation and validation returned to System Design when the evidence showed that the design required refinement.
+
+## Full Software System Engineering Cycle
+
+```text
+Software System Definition
+→ Software System Architecture Design
+→ Progressive Architectural Decomposition
+→ Architectural Forward Planning
+→ Sufficient Software System Design Maturity
+→ Frozen Software System Architecture
+→ Vertical Slice Software System Design
+→ Bounded Vertical Slice
+→ Software Engineering Design
+→ Software System Database / Persistence Design
+→ Canonical Implementation
+→ Technological Implementation
+→ Testing / Validation
+→ Feedback into Software System Design
+→ Next Vertical Slice / Iteration
+→ Mature Operation / Maintenance
+```
+
+The full cycle places the practical implementation loop inside the larger lifecycle of defining, maturing, freezing, implementing, validating, operating, and maintaining the Software System.
+
+---
+
 ## 1. See the System Before Building the Parts
 
 A Software System must first be understood and described as an integrated whole.
