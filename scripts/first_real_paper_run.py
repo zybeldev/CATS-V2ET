@@ -8,7 +8,7 @@ from cats.runtime.real_run import require_real_run_ready
 
 def main():
     parser = argparse.ArgumentParser(
-        description="CATS V2E first real Alpaca PAPER run launcher."
+        description="CATS V2ET first real Alpaca PAPER run launcher."
     )
     parser.add_argument("--symbol", required=True)
     parser.add_argument(

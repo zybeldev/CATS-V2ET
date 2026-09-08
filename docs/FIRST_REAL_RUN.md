@@ -1,4 +1,4 @@
-# CATS V2E — First Real PAPER Run Procedure
+# CATS V2ET — First Real PAPER Run Procedure
 
 ## 1. Configure environment
 

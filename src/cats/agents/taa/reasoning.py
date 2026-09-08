@@ -47,6 +47,7 @@ class CandidateAssessment:
     """
 
     candidate_id: int
+    outlook: str
     summary: str
     confidence: float | None
     valid_for_minutes: int
@@ -153,6 +154,7 @@ class TreeOfThoughtAssessmentModel:
         )
 
         return {
+            "outlook": selected.outlook,
             "summary": selected.summary,
             "confidence": selected.confidence,
             "valid_for_minutes": selected.valid_for_minutes,
@@ -171,6 +173,7 @@ class TreeOfThoughtAssessmentModel:
             generation_context = {
                 **generation_context,
                 "candidate_to_stress_test": {
+                    "outlook": parent.outlook,
                     "summary": parent.summary,
                     "confidence": parent.confidence,
                     "analysis_focus": parent.analysis_focus,
@@ -182,8 +185,9 @@ class TreeOfThoughtAssessmentModel:
             task = (
                 "Generate one independent candidate financial assessment for a bounded "
                 "Tree-of-Thought search. Use only supplied evidence and deterministic "
-                "measurements. Return JSON fields: summary, confidence, "
-                "valid_for_minutes, analysis_focus. Do not issue portfolio intent or "
+                "measurements. Return JSON fields: outlook, summary, confidence, "
+                "valid_for_minutes, analysis_focus. Outlook must be FAVORABLE, NEUTRAL, "
+                "or ADVERSE. Do not issue portfolio intent or "
                 "execution actions. Original TAA task: "
                 f"{original_task}"
             )
@@ -191,8 +195,9 @@ class TreeOfThoughtAssessmentModel:
             task = (
                 "Generate one improved candidate financial assessment by stress-testing "
                 "the supplied candidate against the authoritative context, retrieved "
-                "evidence, and deterministic measurements. Return JSON fields: summary, "
-                "confidence, valid_for_minutes, analysis_focus. Do not issue portfolio "
+                "evidence, and deterministic measurements. Return JSON fields: outlook, "
+                "summary, confidence, valid_for_minutes, analysis_focus. Outlook must be "
+                "FAVORABLE, NEUTRAL, or ADVERSE. Do not issue portfolio "
                 "intent or execution actions. Original TAA task: "
                 f"{original_task}"
             )
@@ -213,6 +218,7 @@ class TreeOfThoughtAssessmentModel:
             evaluation_context = {
                 **context,
                 "candidate_assessment": {
+                    "outlook": candidate.outlook,
                     "summary": candidate.summary,
                     "confidence": candidate.confidence,
                     "analysis_focus": candidate.analysis_focus,
@@ -233,6 +239,7 @@ class TreeOfThoughtAssessmentModel:
             evaluated.append(
                 CandidateAssessment(
                     candidate_id=candidate.candidate_id,
+                    outlook=candidate.outlook,
                     summary=candidate.summary,
                     confidence=candidate.confidence,
                     valid_for_minutes=candidate.valid_for_minutes,
@@ -257,6 +264,10 @@ class TreeOfThoughtAssessmentModel:
         depth: int,
         parent: CandidateAssessment | None,
     ) -> CandidateAssessment:
+        outlook = str(raw.get("outlook", "")).strip().upper()
+        if outlook not in {"FAVORABLE", "NEUTRAL", "ADVERSE"}:
+            raise ValueError("ToT generator must return outlook FAVORABLE, NEUTRAL, or ADVERSE")
+
         summary = str(raw.get("summary", "")).strip()
         if not summary:
             raise ValueError("ToT generator returned an empty candidate summary")
@@ -271,6 +282,7 @@ class TreeOfThoughtAssessmentModel:
 
         candidate = CandidateAssessment(
             candidate_id=self._next_candidate_id,
+            outlook=outlook,
             summary=summary,
             confidence=confidence,
             valid_for_minutes=valid_for_minutes,

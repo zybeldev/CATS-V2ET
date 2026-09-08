@@ -2,7 +2,7 @@ from cats.database.base import Base
 import cats.database.models  # noqa: F401
 
 
-def test_minimum_v2e_tables_registered():
+def test_minimum_v2et_tables_registered():
     names = set(Base.metadata.tables)
     required = {
         "SYS_Environment",

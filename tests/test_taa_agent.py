@@ -47,6 +47,7 @@ def test_taa_builds_grounded_structured_assessment():
     assert assessment.source == "TAA"
     assert assessment.destination == "PMA"
     assert assessment.assessment_type == "CANDIDATE"
+    assert assessment.summary.startswith("Outlook: FAVORABLE\n\n")
     assert assessment.evidence_item_ids
     assert assessment.tss_measurement_set_ids
     assert "ACME" in assessment.summary
@@ -71,6 +72,7 @@ def test_taa_exposes_source_age_and_requires_freshness_review():
             self.task = task
             self.context = context
             return {
+                "outlook": "NEUTRAL",
                 "summary": "Evidence freshness was considered for ACME.",
                 "confidence": 0.7,
                 "valid_for_minutes": 30,

@@ -1,4 +1,4 @@
-# CATS V2E — PAPER Operator Runbook
+# CATS V2ET — PAPER Operator Runbook
 
 Construction Step 18 provides one operational entrypoint and post-run verification.
 

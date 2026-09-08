@@ -1,4 +1,4 @@
-# CATS V2E — Local PostgreSQL Runbook
+# CATS V2ET — Local PostgreSQL Runbook
 
 This step converts the database from an abstract dependency into a reproducible local service.
 

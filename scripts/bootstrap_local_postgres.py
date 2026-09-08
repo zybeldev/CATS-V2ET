@@ -20,7 +20,7 @@ def main():
 
     for attempt in range(30):
         result = subprocess.run(
-            [docker, "compose", "exec", "-T", "postgres", "pg_isready", "-U", "cats", "-d", "cats_v2e"],
+            [docker, "compose", "exec", "-T", "postgres", "pg_isready", "-U", "cats", "-d", "cats_v2et"],
             capture_output=True,
             text=True,
         )

@@ -5,7 +5,7 @@ from cats.runtime.real_run import evaluate_real_run_gate
 def valid_env():
     return {
         "CATS_ENVIRONMENT": "PAPER",
-        "CATS_DATABASE_URL": "postgresql+psycopg://cats:cats@localhost:5432/cats_v2e",
+        "CATS_DATABASE_URL": "postgresql+psycopg://cats:cats@localhost:5432/cats_v2et",
         "ALPACA_API_KEY": "x",
         "ALPACA_API_SECRET": "y",
         "OPENAI_API_KEY": "z",

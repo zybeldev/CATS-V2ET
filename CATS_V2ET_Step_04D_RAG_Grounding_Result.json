@@ -1,0 +1,201 @@
+{
+  "experiment": "CATS V2ET Step 04D - Qwen RAG Grounding Evaluation",
+  "timestamp_utc": "2026-08-31T23:15:46.627941+00:00",
+  "controlled_variables": {
+    "model": "Qwen/Qwen3-14B-AWQ",
+    "thinking_enabled": false,
+    "symbol": "ACME",
+    "financial_instrument_id": "8f64b6cf-1e9f-42bc-ba64-9e40b59817aa",
+    "horizon": "TACTICAL",
+    "assessment_type": "CANDIDATE",
+    "query_text": "revenue operating margin guidance demand customer orders outlook",
+    "tss_measurements": {
+      "last_price": 100.0,
+      "return_1_period": 0.0,
+      "sma_short": 100.0,
+      "sma_long": 100.0,
+      "momentum": 0.0,
+      "annualized_volatility": 0.0,
+      "average_volume": 1000000.0,
+      "liquidity_proxy": 100000000.0
+    },
+    "tss_measurement_set_id": "10b31f99-3ce9-4442-9b0e-8cb6cfdf38d3",
+    "configuration_version_id": "68c5171f-5661-459b-8d6c-d0da5cf3e61d",
+    "variable_under_test": "retrieved evidence"
+  },
+  "cases": [
+    {
+      "case": "POSITIVE",
+      "evidence_character": "clearly positive operating evidence",
+      "evidence": [
+        {
+          "evidence_document_id": "df0bf0e5-147c-4cb6-b060-8add88322e9d",
+          "text": "Synthetic evidence: quarterly revenue increased 14 percent year over year, operating margin expanded by 3 percentage points, and management raised full-year guidance.",
+          "source_name": "Synthetic Positive Evidence 1"
+        },
+        {
+          "evidence_document_id": "6274f8d8-bd93-400c-baa6-ebad21d80ea0",
+          "text": "Synthetic evidence: customer orders accelerated during the quarter and management reported stronger demand across its largest business segment.",
+          "source_name": "Synthetic Positive Evidence 2"
+        }
+      ],
+      "assessment": {
+        "contract_id": "81447d9a-dc73-497c-b83d-504732d7fe49",
+        "flow_id": "0c317614-8a9b-487d-8a76-4a42588f70b2",
+        "source": "TAA",
+        "destination": "PMA",
+        "created_at": "2026-08-31T23:15:26.676305Z",
+        "status": "FINAL",
+        "parent_ids": [],
+        "configuration_version_id": "68c5171f-5661-459b-8d6c-d0da5cf3e61d",
+        "metadata": {},
+        "assessment_id": "fbafb88c-e198-4bb5-be21-c749e4a25abd",
+        "financial_instrument_id": "8f64b6cf-1e9f-42bc-ba64-9e40b59817aa",
+        "assessment_type": "CANDIDATE",
+        "horizon": "TACTICAL",
+        "summary": "The financial instrument ACME shows no change in price over the last period, with equal short and long-term simple moving averages at 100.0. Momentum is flat, and annualized volatility is zero, indicating no price fluctuation. Liquidity is high, with average volume at 1,000,000 and a liquidity proxy of 100,000,000. Retrieved evidence suggests positive performance, including accelerated customer orders, stronger demand in key segments, increased quarterly revenue by 14% YoY, expanded operating margins by 3 percentage points, and raised full-year guidance. These factors suggest a positive outlook for the instrument.",
+        "confidence": 0.773861278752583,
+        "valid_until": "2026-09-01T00:15:26.676219Z",
+        "evidence_item_ids": [
+          "6274f8d8-bd93-400c-baa6-ebad21d80ea0",
+          "df0bf0e5-147c-4cb6-b060-8add88322e9d"
+        ],
+        "tss_measurement_set_ids": [
+          "10b31f99-3ce9-4442-9b0e-8cb6cfdf38d3"
+        ]
+      },
+      "hard_checks": {
+        "assessment_contract_valid": true,
+        "evidence_item_ids_match_case_documents": true,
+        "evidence_item_count": 2
+      },
+      "metrics": {
+        "transport_seconds": 17.07467492199794,
+        "input_tokens": 691,
+        "output_tokens": 170,
+        "inference_seconds": 15.599,
+        "thinking_enabled": false
+      }
+    },
+    {
+      "case": "NEGATIVE",
+      "evidence_character": "clearly negative operating evidence",
+      "evidence": [
+        {
+          "evidence_document_id": "e897d252-a89d-4b3a-82d9-7af9310f8210",
+          "text": "Synthetic evidence: quarterly revenue declined 14 percent year over year, operating margin contracted by 3 percentage points, and management reduced full-year guidance.",
+          "source_name": "Synthetic Negative Evidence 1"
+        },
+        {
+          "evidence_document_id": "c200685f-8f59-4bb3-ad0a-085930ddd8f6",
+          "text": "Synthetic evidence: customer cancellations increased during the quarter and management reported weaker demand across its largest business segment.",
+          "source_name": "Synthetic Negative Evidence 2"
+        }
+      ],
+      "assessment": {
+        "contract_id": "baa7f78a-a75e-4770-81ca-744863ef0cb7",
+        "flow_id": "5421fbe9-5681-4bb6-8e35-2844f1a95c27",
+        "source": "TAA",
+        "destination": "PMA",
+        "created_at": "2026-08-31T23:15:35.554568Z",
+        "status": "FINAL",
+        "parent_ids": [],
+        "configuration_version_id": "68c5171f-5661-459b-8d6c-d0da5cf3e61d",
+        "metadata": {},
+        "assessment_id": "4c8d6f0d-c69a-44df-a23a-d5d438b55b96",
+        "financial_instrument_id": "8f64b6cf-1e9f-42bc-ba64-9e40b59817aa",
+        "assessment_type": "CANDIDATE",
+        "horizon": "TACTICAL",
+        "summary": "The financial instrument ACME shows no price return over the last period, with equal short and long-term simple moving averages, zero momentum, and no annualized volatility. However, retrieved evidence indicates declining revenue, reduced operating margins, management guidance cuts, and increased customer cancellations, suggesting underlying business challenges.",
+        "confidence": 0.7,
+        "valid_until": "2026-09-01T00:15:35.554275Z",
+        "evidence_item_ids": [
+          "c200685f-8f59-4bb3-ad0a-085930ddd8f6",
+          "e897d252-a89d-4b3a-82d9-7af9310f8210"
+        ],
+        "tss_measurement_set_ids": [
+          "10b31f99-3ce9-4442-9b0e-8cb6cfdf38d3"
+        ]
+      },
+      "hard_checks": {
+        "assessment_contract_valid": true,
+        "evidence_item_ids_match_case_documents": true,
+        "evidence_item_count": 2
+      },
+      "metrics": {
+        "transport_seconds": 8.876427263006917,
+        "input_tokens": 714,
+        "output_tokens": 77,
+        "inference_seconds": 8.103,
+        "thinking_enabled": false
+      }
+    },
+    {
+      "case": "AMBIGUOUS",
+      "evidence_character": "mixed and insufficiently directional evidence",
+      "evidence": [
+        {
+          "evidence_document_id": "0fc429b2-3eef-4e12-be0e-7825f2ce79d3",
+          "text": "Synthetic evidence: quarterly revenue was approximately flat year over year, operating margin was stable, and management maintained existing full-year guidance.",
+          "source_name": "Synthetic Ambiguous Evidence 1"
+        },
+        {
+          "evidence_document_id": "b8e96d4b-d270-460f-b201-0d70e3159fba",
+          "text": "Synthetic evidence: management reported mixed regional demand and stated that near-term visibility remains limited, with no clear change in overall customer order trends.",
+          "source_name": "Synthetic Ambiguous Evidence 2"
+        }
+      ],
+      "assessment": {
+        "contract_id": "ac26d36e-8d37-462f-9090-eb3ac9b4082a",
+        "flow_id": "88854c7a-2ccf-4fe9-b2cf-fae56dd8035b",
+        "source": "TAA",
+        "destination": "PMA",
+        "created_at": "2026-08-31T23:15:46.626784Z",
+        "status": "FINAL",
+        "parent_ids": [],
+        "configuration_version_id": "68c5171f-5661-459b-8d6c-d0da5cf3e61d",
+        "metadata": {},
+        "assessment_id": "699dd90d-d333-49b0-aec8-950691ceb38c",
+        "financial_instrument_id": "8f64b6cf-1e9f-42bc-ba64-9e40b59817aa",
+        "assessment_type": "CANDIDATE",
+        "horizon": "TACTICAL",
+        "summary": "The financial instrument ACME shows no change in price over the last period, with equal short and long-term simple moving averages at 100.0. Momentum is neutral, and annualized volatility is zero, indicating no price fluctuation. Average trading volume is 1,000,000, and liquidity is high at 100,000,000. Retrieved evidence suggests flat quarterly revenue, stable operating margin, and no change in full-year guidance, though near-term visibility remains limited.",
+        "confidence": 0.93,
+        "valid_until": "2026-09-01T00:15:46.626688Z",
+        "evidence_item_ids": [
+          "0fc429b2-3eef-4e12-be0e-7825f2ce79d3",
+          "b8e96d4b-d270-460f-b201-0d70e3159fba"
+        ],
+        "tss_measurement_set_ids": [
+          "10b31f99-3ce9-4442-9b0e-8cb6cfdf38d3"
+        ]
+      },
+      "hard_checks": {
+        "assessment_contract_valid": true,
+        "evidence_item_ids_match_case_documents": true,
+        "evidence_item_count": 2
+      },
+      "metrics": {
+        "transport_seconds": 12.968327706010314,
+        "input_tokens": 699,
+        "output_tokens": 126,
+        "inference_seconds": 11.946,
+        "thinking_enabled": false
+      }
+    }
+  ],
+  "cross_case_observations": {
+    "confidence": {
+      "positive": 0.773861278752583,
+      "negative": 0.7,
+      "ambiguous": 0.93,
+      "ambiguous_not_higher_than_both_directional_cases": false
+    },
+    "manual_review_required": {
+      "summary_changes_with_evidence": true,
+      "summary_uses_supplied_evidence": true,
+      "unsupported_factual_claims": true,
+      "uncertainty_matches_ambiguous_evidence": true
+    }
+  }
+}

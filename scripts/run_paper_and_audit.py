@@ -45,7 +45,7 @@ def main():
         args.output_dir,
     ])
 
-    print("CATS V2E PAPER run + audit: PASS")
+    print("CATS V2ET PAPER run + audit: PASS")
 
 
 if __name__ == "__main__":

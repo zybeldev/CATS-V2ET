@@ -9,7 +9,7 @@ def main():
         raise SystemExit("SKIP: OPENAI_API_KEY is not configured.")
 
     embedding = OpenAIEmbeddingAdapter(api_key=api_key)
-    vector = embedding.embed(["CATS V2E smoke test"])[0]
+    vector = embedding.embed(["CATS V2ET smoke test"])[0]
 
     model = os.getenv("OPENAI_MODEL")
     if not model:

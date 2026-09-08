@@ -19,7 +19,7 @@ class ValidationContext:
 
 
 class SystemValidator:
-    """Deterministic, fail-closed implementation of the minimum V2E SYS rules."""
+    """Deterministic, fail-closed implementation of the minimum V2ET SYS rules."""
 
     RULE_VERSION = "1.0"
 
@@ -48,7 +48,7 @@ class SystemValidator:
             context.environment_code == config.permitted_trading_environment,
             config.permitted_trading_environment,
             context.environment_code,
-            "V2E permits paper trading only.",
+            "V2ET permits paper trading only.",
         )
 
         for target in decision.targets:

@@ -56,6 +56,7 @@ def test_monitoring_assessment_uses_existing_taa_contract_without_downstream_aut
     assert result["status"] == "FINAL"
     assert result["mode"] == "MONITORING_ONLY"
     assert result["assessment_type"] == "CANDIDATE"
+    assert result["outlook"] == "FAVORABLE"
     assert result["horizon"] == "TACTICAL"
     assert result["evidence_items_used"] == 1
     assert "AAPL" in result["summary"]

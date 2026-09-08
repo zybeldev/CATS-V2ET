@@ -24,6 +24,7 @@ class ScriptedReasoningModel:
         summary = self.candidate_summaries[self.candidate_calls]
         self.candidate_calls += 1
         return {
+            "outlook": "FAVORABLE",
             "summary": summary,
             "confidence": 0.7,
             "valid_for_minutes": 45,
@@ -33,7 +34,12 @@ class ScriptedReasoningModel:
 
 class DirectModel:
     def reason(self, *, task: str, context: dict) -> dict:
-        return {"summary": "direct", "confidence": 0.5, "valid_for_minutes": 30}
+        return {
+            "outlook": "NEUTRAL",
+            "summary": "direct",
+            "confidence": 0.5,
+            "valid_for_minutes": 30,
+        }
 
 
 def test_tot_explores_candidates_and_selects_best_scored_branch():
@@ -61,6 +67,7 @@ def test_tot_explores_candidates_and_selects_best_scored_branch():
     result = tot.reason(task="assess", context={"boundary_rules": {}})
 
     assert result["summary"] == "refined strong"
+    assert result["outlook"] == "FAVORABLE"
     assert result["confidence"] == 0.7
     assert result["valid_for_minutes"] == 45
     assert tot.last_metrics is not None

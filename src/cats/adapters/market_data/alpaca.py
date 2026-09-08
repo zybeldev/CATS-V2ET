@@ -42,6 +42,13 @@ class AlpacaMarketDataAdapter:
         )
         response = self.client.get_stock_bars(request)
         return [
-            EquityBar(float(bar.close), float(bar.volume))
+            EquityBar(
+                close=float(bar.close),
+                volume=float(bar.volume),
+                open=float(bar.open),
+                high=float(bar.high),
+                low=float(bar.low),
+                timestamp=getattr(bar, "timestamp", None),
+            )
             for bar in response.data.get(symbol, [])
         ]

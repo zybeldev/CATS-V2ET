@@ -69,7 +69,7 @@ class ProductionFlowPersistence:
             env = models.Environment(
                 environment_id=str(uuid4()),
                 environment_code="PAPER",
-                name="CATS V2E Paper",
+                name="CATS V2ET Paper",
                 is_active=True,
             )
             self.session.add(env)
@@ -112,7 +112,7 @@ class ProductionFlowPersistence:
                 effective_at=now,
                 status="ACTIVE",
                 is_current=True,
-                change_reason="CATS V2E production PAPER flow bootstrap",
+                change_reason="CATS V2ET production PAPER flow bootstrap",
             ))
 
         self.session.flush()
@@ -120,7 +120,7 @@ class ProductionFlowPersistence:
             self.session.add(models.Portfolio(
                 portfolio_id=str(portfolio_id),
                 environment_id=env.environment_id,
-                name="CATS V2E Paper Portfolio",
+                name="CATS V2ET Paper Portfolio",
                 status="ACTIVE",
             ))
 

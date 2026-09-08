@@ -1,0 +1,206 @@
+{
+  "experiment": "CATS V2ET Step 04E - Qwen Confidence Calibration Evaluation",
+  "timestamp_utc": "2026-08-31T23:23:45.295350+00:00",
+  "scope_boundary": {
+    "core_taa_modified": false,
+    "assessment_contract_modified": false,
+    "model_changed": false,
+    "retrieval_cases_changed": false,
+    "only_experimental_task_semantics_changed": true
+  },
+  "confidence_calibration_rule": "Confidence semantics for this experiment: confidence represents evidentiary certainty in the assessment, not confidence that the situation is uncertain. Use higher confidence only when the supplied evidence and deterministic measurements consistently support the assessment. Mixed, contradictory, limited, or insufficiently directional evidence must reduce confidence. Do not increase confidence merely because the conclusion itself is neutral, mixed, or uncertain.",
+  "controlled_variables": {
+    "model": "Qwen/Qwen3-14B-AWQ",
+    "thinking_enabled": false,
+    "symbol": "ACME",
+    "horizon": "TACTICAL",
+    "assessment_type": "CANDIDATE",
+    "query_text": "revenue operating margin guidance demand customer orders outlook",
+    "tss_measurements": {
+      "last_price": 100.0,
+      "return_1_period": 0.0,
+      "sma_short": 100.0,
+      "sma_long": 100.0,
+      "momentum": 0.0,
+      "annualized_volatility": 0.0,
+      "average_volume": 1000000.0,
+      "liquidity_proxy": 100000000.0
+    },
+    "variable_under_test": "explicit confidence semantics in the task instruction"
+  },
+  "cases": [
+    {
+      "case": "POSITIVE",
+      "evidence_character": "clearly positive operating evidence",
+      "evidence": [
+        {
+          "evidence_document_id": "b0b99916-7a9b-4c9d-bc6e-2a2f635d6e62",
+          "text": "Synthetic evidence: quarterly revenue increased 14 percent year over year, operating margin expanded by 3 percentage points, and management raised full-year guidance.",
+          "source_name": "Synthetic Positive Evidence 1"
+        },
+        {
+          "evidence_document_id": "3b6f35ba-95f2-4eed-ae4d-5c488693a70d",
+          "text": "Synthetic evidence: customer orders accelerated during the quarter and management reported stronger demand across its largest business segment.",
+          "source_name": "Synthetic Positive Evidence 2"
+        }
+      ],
+      "assessment": {
+        "contract_id": "83b1a6c8-bf43-4ee3-9399-b87fd1f47d07",
+        "flow_id": "5aeafcc2-f12d-4841-bed9-b17a77234a93",
+        "source": "TAA",
+        "destination": "PMA",
+        "created_at": "2026-08-31T23:23:23.869534Z",
+        "status": "FINAL",
+        "parent_ids": [],
+        "configuration_version_id": "1a53d941-5f9c-4893-93be-d784806f7c8e",
+        "metadata": {},
+        "assessment_id": "76905b8b-568c-4779-9c4b-efb9c4879013",
+        "financial_instrument_id": "ada3c188-4d41-47e5-b46f-aa0340f8af78",
+        "assessment_type": "CANDIDATE",
+        "horizon": "TACTICAL",
+        "summary": "The financial assessment indicates a neutral position with no directional bias. The evidence suggests stable performance with no significant growth or decline, supported by consistent deterministic measurements such as zero return over one period, equal short and long-term simple moving averages, and zero momentum. The retrieved evidence points to stable or slightly positive operational performance, but it is not strongly directional.",
+        "confidence": 0.6,
+        "valid_until": "2026-09-01T00:23:23.869451Z",
+        "evidence_item_ids": [
+          "3b6f35ba-95f2-4eed-ae4d-5c488693a70d",
+          "b0b99916-7a9b-4c9d-bc6e-2a2f635d6e62"
+        ],
+        "tss_measurement_set_ids": [
+          "0699e484-6b2f-4669-81fd-c14052300930"
+        ]
+      },
+      "hard_checks": {
+        "assessment_contract_valid": true,
+        "evidence_item_ids_match_case_documents": true,
+        "evidence_item_count": 2
+      },
+      "metrics": {
+        "transport_seconds": 9.507172590994742,
+        "input_tokens": 773,
+        "output_tokens": 86,
+        "inference_seconds": 8.46,
+        "thinking_enabled": false
+      }
+    },
+    {
+      "case": "NEGATIVE",
+      "evidence_character": "clearly negative operating evidence",
+      "evidence": [
+        {
+          "evidence_document_id": "58b742a3-7b36-4a24-8093-d51c39e526ac",
+          "text": "Synthetic evidence: quarterly revenue declined 14 percent year over year, operating margin contracted by 3 percentage points, and management reduced full-year guidance.",
+          "source_name": "Synthetic Negative Evidence 1"
+        },
+        {
+          "evidence_document_id": "ae3cd3f0-015e-4d02-8ac7-f759d98d6e44",
+          "text": "Synthetic evidence: customer cancellations increased during the quarter and management reported weaker demand across its largest business segment.",
+          "source_name": "Synthetic Negative Evidence 2"
+        }
+      ],
+      "assessment": {
+        "contract_id": "96cc136f-0b5e-43aa-9ad0-d6f11b7ab843",
+        "flow_id": "e9c08692-17f2-46e6-a749-833236a25577",
+        "source": "TAA",
+        "destination": "PMA",
+        "created_at": "2026-08-31T23:23:33.774241Z",
+        "status": "FINAL",
+        "parent_ids": [],
+        "configuration_version_id": "1a53d941-5f9c-4893-93be-d784806f7c8e",
+        "metadata": {},
+        "assessment_id": "c6919578-ec50-48a5-a8c3-36717bea3c4d",
+        "financial_instrument_id": "ada3c188-4d41-47e5-b46f-aa0340f8af78",
+        "assessment_type": "CANDIDATE",
+        "horizon": "TACTICAL",
+        "summary": "The financial assessment indicates a neutral position with no directional bias, as the deterministic measurements show no clear trend or volatility. However, retrieved evidence suggests potential underlying challenges, including increased customer cancellations, weaker demand in key segments, and a decline in revenue and operating margin. These factors may indicate a less favorable outlook, though they do not directly contradict the neutral measurements.",
+        "confidence": 0.4,
+        "valid_until": "2026-09-01T00:23:33.774171Z",
+        "evidence_item_ids": [
+          "ae3cd3f0-015e-4d02-8ac7-f759d98d6e44",
+          "58b742a3-7b36-4a24-8093-d51c39e526ac"
+        ],
+        "tss_measurement_set_ids": [
+          "0699e484-6b2f-4669-81fd-c14052300930"
+        ]
+      },
+      "hard_checks": {
+        "assessment_contract_valid": true,
+        "evidence_item_ids_match_case_documents": true,
+        "evidence_item_count": 2
+      },
+      "metrics": {
+        "transport_seconds": 9.903386274992954,
+        "input_tokens": 790,
+        "output_tokens": 89,
+        "inference_seconds": 9.081,
+        "thinking_enabled": false
+      }
+    },
+    {
+      "case": "AMBIGUOUS",
+      "evidence_character": "mixed and insufficiently directional evidence",
+      "evidence": [
+        {
+          "evidence_document_id": "7d7d6d8f-03df-483a-82fe-6c0bc8bb8f47",
+          "text": "Synthetic evidence: quarterly revenue was approximately flat year over year, operating margin was stable, and management maintained existing full-year guidance.",
+          "source_name": "Synthetic Ambiguous Evidence 1"
+        },
+        {
+          "evidence_document_id": "1011a9bb-b050-46e2-9e39-61204c769137",
+          "text": "Synthetic evidence: management reported mixed regional demand and stated that near-term visibility remains limited, with no clear change in overall customer order trends.",
+          "source_name": "Synthetic Ambiguous Evidence 2"
+        }
+      ],
+      "assessment": {
+        "contract_id": "80e20604-7f1e-40e7-8849-0271df4abb72",
+        "flow_id": "fba8e689-1f29-4307-bb20-ea82869666c8",
+        "source": "TAA",
+        "destination": "PMA",
+        "created_at": "2026-08-31T23:23:45.273323Z",
+        "status": "FINAL",
+        "parent_ids": [],
+        "configuration_version_id": "1a53d941-5f9c-4893-93be-d784806f7c8e",
+        "metadata": {},
+        "assessment_id": "4622c48e-2666-4567-b724-8c817f8bea3e",
+        "financial_instrument_id": "ada3c188-4d41-47e5-b46f-aa0340f8af78",
+        "assessment_type": "CANDIDATE",
+        "horizon": "TACTICAL",
+        "summary": "The financial assessment for ACME indicates a neutral position with no clear directional bias. The last price, return over one period, and momentum are all flat, while the short and long simple moving averages are equal, suggesting a lack of trend. The annualized volatility is also flat, indicating stable price movements. The retrieved evidence suggests stable operating margins and flat revenue growth, but also mentions mixed regional demand and limited near-term visibility. These factors contribute to an overall neutral outlook.",
+        "confidence": 0.5,
+        "valid_until": "2026-09-01T00:23:45.273269Z",
+        "evidence_item_ids": [
+          "7d7d6d8f-03df-483a-82fe-6c0bc8bb8f47",
+          "1011a9bb-b050-46e2-9e39-61204c769137"
+        ],
+        "tss_measurement_set_ids": [
+          "0699e484-6b2f-4669-81fd-c14052300930"
+        ]
+      },
+      "hard_checks": {
+        "assessment_contract_valid": true,
+        "evidence_item_ids_match_case_documents": true,
+        "evidence_item_count": 2
+      },
+      "metrics": {
+        "transport_seconds": 11.498096569004701,
+        "input_tokens": 776,
+        "output_tokens": 111,
+        "inference_seconds": 10.641,
+        "thinking_enabled": false
+      }
+    }
+  ],
+  "confidence_after_calibration": {
+    "positive": 0.6,
+    "negative": 0.4,
+    "ambiguous": 0.5
+  },
+  "calibration_check": {
+    "ambiguous_not_higher_than_both_directional_cases": false
+  },
+  "step04d_baseline_confidence": {
+    "positive": 0.773861278752583,
+    "negative": 0.7,
+    "ambiguous": 0.93,
+    "ambiguous_not_higher_than_both_directional_cases": false
+  }
+}

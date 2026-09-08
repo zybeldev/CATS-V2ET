@@ -29,7 +29,7 @@ class PortfolioStateUpdater:
         if not execution_result.verified:
             raise ValueError("Unverified execution cannot update authoritative Portfolio State.")
         if execution_result.result_status != "COMPLETED":
-            raise ValueError("Only completed verified execution updates Portfolio State in V2E.")
+            raise ValueError("Only completed verified execution updates Portfolio State in V2ET.")
         if portfolio_value <= 0:
             raise ValueError("portfolio_value must be positive.")
 

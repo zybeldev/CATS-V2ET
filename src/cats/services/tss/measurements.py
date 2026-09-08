@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 from math import sqrt
 from statistics import mean, pstdev
 from typing import Sequence
@@ -7,6 +8,10 @@ from typing import Sequence
 class EquityBar:
     close: float
     volume: float
+    open: float | None = None
+    high: float | None = None
+    low: float | None = None
+    timestamp: datetime | None = None
 
 @dataclass(frozen=True)
 class EquityMeasurements:

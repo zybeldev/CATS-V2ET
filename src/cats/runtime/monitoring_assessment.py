@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from typing import Iterable
@@ -136,6 +138,15 @@ class MonitoringAssessmentService:
             "assessment_id": str(assessment.assessment_id),
             "horizon": assessment.horizon,
             "assessment_type": assessment.assessment_type,
+            "outlook": (
+                match.group(1).upper()
+                if (match := re.search(
+                    r"^\s*Outlook:\s*(FAVORABLE|NEUTRAL|ADVERSE)\s*$",
+                    assessment.summary,
+                    re.IGNORECASE | re.MULTILINE,
+                ))
+                else None
+            ),
             "confidence": assessment.confidence,
             "summary": assessment.summary,
             "assessed_at": assessed_at,

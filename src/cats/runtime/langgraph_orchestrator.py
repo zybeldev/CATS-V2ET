@@ -70,7 +70,7 @@ def _append_path(state: CATSBackboneState, node: str) -> tuple[str, ...]:
 
 
 class LangGraphV2ETOrchestrator:
-    """LangGraph variation of the V2E vertical-slice coordinator.
+    """LangGraph variation of the V2ET vertical-slice coordinator.
 
     LangGraph owns only runtime state transitions and principal-component flow.
     PMA, SYS, TEA, PMS, TES, contracts, and financial authority remain unchanged.

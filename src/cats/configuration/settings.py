@@ -6,7 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     environment: Literal["DEV", "TEST", "PAPER", "PROD"] = "PAPER"
-    database_url: str = "postgresql+psycopg://cats:cats@localhost:5432/cats_v2e"
+    database_url: str = "postgresql+psycopg://cats:cats@localhost:5432/cats_v2et"
     log_level: str = "INFO"
 
     alpaca_api_key: str | None = None

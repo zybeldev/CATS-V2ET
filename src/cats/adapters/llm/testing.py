@@ -20,7 +20,15 @@ class DeterministicAssessmentModel:
                 f"momentum={measurements['momentum']}."
             )
             confidence = min(0.9, 0.5 + 0.08 * len(evidence))
+            momentum = measurements.get("momentum")
+            outlook = "FAVORABLE" if momentum is not None and momentum > 0 else "NEUTRAL"
         else:
             summary = f"{symbol}: insufficient retrieved evidence for a grounded assessment."
             confidence = 0.2
-        return {"summary": summary, "confidence": confidence, "valid_for_minutes": 60}
+            outlook = "NEUTRAL"
+        return {
+            "outlook": outlook,
+            "summary": summary,
+            "confidence": confidence,
+            "valid_for_minutes": 60,
+        }

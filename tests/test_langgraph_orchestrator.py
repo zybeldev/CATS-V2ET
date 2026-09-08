@@ -15,7 +15,7 @@ from cats.systems.sys import GovernedConfiguration, SystemValidator, ValidationC
 from cats.systems.tes import TradingExecutionSystem
 
 
-def _run(summary: str, *, max_order_value: float = 25_000.0):
+def _run(summary: str, *, outlook: str = "FAVORABLE", max_order_value: float = 25_000.0):
     instrument_id = uuid4()
     config_id = uuid4()
     assessment = Assessment(
@@ -26,7 +26,7 @@ def _run(summary: str, *, max_order_value: float = 25_000.0):
         financial_instrument_id=instrument_id,
         assessment_type="TACTICAL",
         horizon="TACTICAL",
-        summary=summary,
+        summary=f"Outlook: {outlook}\n\n{summary}",
         confidence=0.9,
         status="FINAL",
     )
@@ -93,7 +93,7 @@ def test_langgraph_backbone_routes_sys_failure_without_invoking_tea():
 
 
 def test_langgraph_backbone_routes_no_change_without_invoking_tea():
-    result = _run("mixed evidence with no portfolio implication")
+    result = _run("mixed evidence with no portfolio implication", outlook="NEUTRAL")
 
     assert result.completed is True
     assert result.terminal_state == "COMPLETED"

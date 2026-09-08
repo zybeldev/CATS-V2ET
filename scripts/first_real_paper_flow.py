@@ -31,7 +31,7 @@ def _build_embeddings(*, provider: str, model_name: str | None, openai_key: str 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Run the complete persistent CATS V2E Alpaca PAPER authority chain."
+        description="Run the complete persistent CATS V2ET Alpaca PAPER authority chain."
     )
     parser.add_argument("--symbol", required=True)
     parser.add_argument("--evidence-url", action="append", required=True)

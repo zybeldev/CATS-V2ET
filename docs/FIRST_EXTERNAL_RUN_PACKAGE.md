@@ -1,4 +1,4 @@
-# CATS V2E — First External Run Package
+# CATS V2ET — First External Run Package
 
 Construction Step 19 packages the operational path into three actions.
 

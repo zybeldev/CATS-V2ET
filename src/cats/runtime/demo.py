@@ -7,7 +7,7 @@ from cats.adapters.alpaca.models import BrokerActionOutcome, BrokerOrder
 from cats.agents.pma import DeterministicPMAReasoningModel, PortfolioManagementAgent, PortfolioStateView
 from cats.agents.tea import DeterministicTEAReasoningModel, TradingExecutionAgent
 from cats.contracts import Assessment, AlternativePosition, PortfolioAlternative
-from cats.runtime.orchestrator import V2EOrchestrator
+from cats.runtime.orchestrator import V2ETOrchestrator
 from cats.systems.sys import GovernedConfiguration, SystemValidator, ValidationContext
 from cats.systems.tes import TradingExecutionSystem
 
@@ -54,7 +54,7 @@ def run_demo():
     assessment = Assessment(
         flow_id=uuid4(), source="TAA", destination="PMA", assessment_id=uuid4(),
         financial_instrument_id=instrument_id, assessment_type="TACTICAL", horizon="TACTICAL",
-        summary="positive attractive opportunity", confidence=0.9, status="FINAL"
+        summary="Outlook: FAVORABLE\n\nPositive attractive opportunity", confidence=0.9, status="FINAL"
     )
     state = PortfolioStateView(
         portfolio_id=uuid4(), portfolio_state_id=uuid4(), cash_weight=0.5,
@@ -62,7 +62,7 @@ def run_demo():
     )
     pma = PortfolioManagementAgent(DeterministicPMAReasoningModel(), DemoOptimizer())
     tea = TradingExecutionAgent(DeterministicTEAReasoningModel(), TradingExecutionSystem(DemoBroker()))
-    orchestrator = V2EOrchestrator(pma=pma, sys_validator=SystemValidator(), tea=tea)
+    orchestrator = V2ETOrchestrator(pma=pma, sys_validator=SystemValidator(), tea=tea)
     result = orchestrator.run_from_assessment(
         assessment=assessment,
         portfolio_state=state,

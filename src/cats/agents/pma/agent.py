@@ -66,7 +66,7 @@ class PortfolioManagementAgent:
             )
 
         if not reasoning.use_optimizer:
-            raise ValueError("Portfolio-changing PMA decisions must use PMS in V2E.")
+            raise ValueError("Portfolio-changing PMA decisions must use PMS in V2ET.")
 
         request = OptimizationRequest(
             flow_id=assessment.flow_id,

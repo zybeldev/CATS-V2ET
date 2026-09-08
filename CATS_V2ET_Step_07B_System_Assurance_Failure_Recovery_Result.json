@@ -1,0 +1,27 @@
+{
+  "experiment": "CATS V2ET Step 07B - System Assurance Failure and Recovery",
+  "resolved_broker_reality": {
+    "unknown_outcome_detected": true,
+    "client_order_id_preserved": true,
+    "blind_resubmission_prevented": true,
+    "recovered_certainty": "CONFIRMED",
+    "final_status": "COMPLETED",
+    "remaining_quantity": 0.0,
+    "passed": true
+  },
+  "unresolved_broker_reality": {
+    "unknown_outcome_detected": true,
+    "blind_resubmission_prevented": true,
+    "recovered_certainty": "UNKNOWN_OUTCOME",
+    "final_status": "SUSPENDED",
+    "passed": true
+  },
+  "checks": {
+    "detects_unknown_outcome": true,
+    "prevents_blind_resubmission": true,
+    "preserves_recovery_identity": true,
+    "resolves_confirmed_fill_to_completed": true,
+    "suspends_when_reality_remains_unknown": true
+  },
+  "result": "PASS"
+}

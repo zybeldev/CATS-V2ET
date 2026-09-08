@@ -38,7 +38,7 @@ class FakeOptimizer:
         )
 
 
-def make_assessment(summary="attractive opportunity"):
+def make_assessment(summary="attractive opportunity", *, outlook="FAVORABLE", confidence=0.8):
     return Assessment(
         flow_id=uuid4(),
         source="TAA",
@@ -47,8 +47,8 @@ def make_assessment(summary="attractive opportunity"):
         financial_instrument_id=uuid4(),
         assessment_type="TACTICAL",
         horizon="TACTICAL",
-        summary=summary,
-        confidence=0.8,
+        summary=f"Outlook: {outlook}\n\n{summary}",
+        confidence=confidence,
         status="FINAL",
     )
 
@@ -93,7 +93,7 @@ def test_pma_does_not_call_pms_for_no_change():
     )
 
     decision = agent.decide(
-        assessment=make_assessment("neutral conditions"),
+        assessment=make_assessment("neutral conditions", outlook="NEUTRAL"),
         portfolio_state=make_state(),
         strategic_envelope_id=uuid4(),
         configuration_version_id=uuid4(),
@@ -122,6 +122,24 @@ def test_infeasible_pms_result_does_not_become_modified_portfolio():
     assert decision.decision_type == "NO_CHANGE"
     assert decision.selected_portfolio_alternative_id is None
     assert decision.targets == []
+
+
+def test_pma_requires_minimum_confidence_for_portfolio_change():
+    optimizer = FakeOptimizer(feasible=True)
+    agent = PortfolioManagementAgent(
+        DeterministicPMAReasoningModel(minimum_action_confidence=0.60),
+        optimizer,
+    )
+
+    decision = agent.decide(
+        assessment=make_assessment(outlook="FAVORABLE", confidence=0.59),
+        portfolio_state=make_state(),
+        strategic_envelope_id=uuid4(),
+        configuration_version_id=uuid4(),
+    )
+
+    assert optimizer.calls == 0
+    assert decision.decision_type == "NO_CHANGE"
 
 
 class TargetedOptimizer:

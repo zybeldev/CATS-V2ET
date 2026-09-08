@@ -1,0 +1,211 @@
+{
+  "experiment": "CATS V2ET Step 05B - gpt-oss-20b TAA Comparative Evaluation",
+  "timestamp_utc": "2026-09-01T15:18:21.606651+00:00",
+  "scope_boundary": {
+    "core_taa_modified": false,
+    "assessment_contract_modified": false,
+    "retrieval_cases_changed_from_step04d": false,
+    "confidence_semantics_changed_from_step04e": false,
+    "existing_numeric_confidence_type_made_explicit": true,
+    "model_under_test": "openai/gpt-oss-20b"
+  },
+  "controlled_variables": {
+    "symbol": "ACME",
+    "horizon": "TACTICAL",
+    "assessment_type": "CANDIDATE",
+    "query_text": "revenue operating margin guidance demand customer orders outlook",
+    "tss_measurements": {
+      "last_price": 100.0,
+      "return_1_period": 0.0,
+      "sma_short": 100.0,
+      "sma_long": 100.0,
+      "momentum": 0.0,
+      "annualized_volatility": 0.0,
+      "average_volume": 1000000.0,
+      "liquidity_proxy": 100000000.0
+    },
+    "reasoning_effort": "low",
+    "variable_under_test": "reasoning model"
+  },
+  "confidence_calibration_rule": "Confidence semantics for this experiment: confidence represents evidentiary certainty in the assessment, not confidence that the situation is uncertain. Use higher confidence only when the supplied evidence and deterministic measurements consistently support the assessment. Mixed, contradictory, limited, or insufficiently directional evidence must reduce confidence. Do not increase confidence merely because the conclusion itself is neutral, mixed, or uncertain.",
+  "numeric_confidence_contract_rule": "Existing Assessment contract clarification: confidence must be a JSON number between 0.0 and 1.0 inclusive, or null when confidence is unavailable. Do not return qualitative labels such as low, medium, or high for confidence.",
+  "cases": [
+    {
+      "case": "POSITIVE",
+      "evidence_character": "clearly positive operating evidence",
+      "evidence": [
+        {
+          "evidence_document_id": "a17cab9a-4ad0-4cf6-b0e9-2d33297743ed",
+          "text": "Synthetic evidence: quarterly revenue increased 14 percent year over year, operating margin expanded by 3 percentage points, and management raised full-year guidance.",
+          "source_name": "Synthetic Positive Evidence 1"
+        },
+        {
+          "evidence_document_id": "07f931c8-9759-47bc-a2b3-a3c7ee723551",
+          "text": "Synthetic evidence: customer orders accelerated during the quarter and management reported stronger demand across its largest business segment.",
+          "source_name": "Synthetic Positive Evidence 2"
+        }
+      ],
+      "assessment": {
+        "contract_id": "e3067c54-0652-4934-9e1c-175dcb7642aa",
+        "flow_id": "bac5c2fb-e1c5-4278-a7e5-3224dacb6d91",
+        "source": "TAA",
+        "destination": "PMA",
+        "created_at": "2026-09-01T15:17:04.032944Z",
+        "status": "FINAL",
+        "parent_ids": [],
+        "configuration_version_id": "c71d18d2-6fe3-48b8-9097-da58f4787c0c",
+        "metadata": {},
+        "assessment_id": "18eeeb55-fd01-467f-888e-3bd57032540f",
+        "financial_instrument_id": "1cba1ac1-25a3-48ed-a4fd-73ad13afddff",
+        "assessment_type": "CANDIDATE",
+        "horizon": "TACTICAL",
+        "summary": "The available evidence indicates that the company experienced accelerated customer orders, stronger demand in its largest business segment, a 14% year\u2011over\u2011year revenue increase, a 3\u2011percentage\u2011point expansion in operating margin, and an upward revision of full\u2011year guidance. These signals suggest a positive short\u2011term outlook for the stock. However, deterministic measurements show no price momentum, flat short\u2011 and long\u2011term moving averages, zero volatility, and no change in price, which temper the strength of the assessment. Overall, the evidence supports a cautiously optimistic view, but the lack of price movement and volatility data limits the certainty of the conclusion.",
+        "confidence": 0.6,
+        "valid_until": "2026-09-01T16:17:04.032765Z",
+        "evidence_item_ids": [
+          "07f931c8-9759-47bc-a2b3-a3c7ee723551",
+          "a17cab9a-4ad0-4cf6-b0e9-2d33297743ed"
+        ],
+        "tss_measurement_set_ids": [
+          "39e25fc6-2145-45b1-ac3d-3ec7259e3235"
+        ]
+      },
+      "hard_checks": {
+        "assessment_contract_valid": true,
+        "evidence_item_ids_match_case_documents": true,
+        "evidence_item_count": 2
+      },
+      "metrics": {
+        "transport_seconds": 51.801559714003815,
+        "input_tokens": 775,
+        "output_tokens": 202,
+        "inference_seconds": 49.274,
+        "reasoning_effort": "low"
+      }
+    },
+    {
+      "case": "NEGATIVE",
+      "evidence_character": "clearly negative operating evidence",
+      "evidence": [
+        {
+          "evidence_document_id": "e1992902-0c80-48f2-b0e1-a4e35a34de22",
+          "text": "Synthetic evidence: quarterly revenue declined 14 percent year over year, operating margin contracted by 3 percentage points, and management reduced full-year guidance.",
+          "source_name": "Synthetic Negative Evidence 1"
+        },
+        {
+          "evidence_document_id": "b39ad4a8-66d2-41bd-8a7f-a339c55eafb8",
+          "text": "Synthetic evidence: customer cancellations increased during the quarter and management reported weaker demand across its largest business segment.",
+          "source_name": "Synthetic Negative Evidence 2"
+        }
+      ],
+      "assessment": {
+        "contract_id": "74f31424-5683-4ef6-9990-5aa23bff83da",
+        "flow_id": "c7c423af-819a-4f45-9a0f-4f98572c6844",
+        "source": "TAA",
+        "destination": "PMA",
+        "created_at": "2026-09-01T15:17:46.929443Z",
+        "status": "FINAL",
+        "parent_ids": [],
+        "configuration_version_id": "c71d18d2-6fe3-48b8-9097-da58f4787c0c",
+        "metadata": {},
+        "assessment_id": "f33b54fa-e3c6-4789-a891-64ed392af793",
+        "financial_instrument_id": "1cba1ac1-25a3-48ed-a4fd-73ad13afddff",
+        "assessment_type": "CANDIDATE",
+        "horizon": "TACTICAL",
+        "summary": "The available evidence indicates a weakening business environment for ACME, with reported increases in customer cancellations, a 14% decline in quarterly revenue, contraction in operating margin, and reduced full\u2011year guidance. Deterministic measurements show no price momentum or volatility, and short\u2011 and long\u2011term moving averages are flat, suggesting a lack of upward trend. Overall, the data support a cautious or negative short\u2011term outlook for the stock.",
+        "confidence": 0.55,
+        "valid_until": "2026-09-01T16:17:46.929352Z",
+        "evidence_item_ids": [
+          "b39ad4a8-66d2-41bd-8a7f-a339c55eafb8",
+          "e1992902-0c80-48f2-b0e1-a4e35a34de22"
+        ],
+        "tss_measurement_set_ids": [
+          "39e25fc6-2145-45b1-ac3d-3ec7259e3235"
+        ]
+      },
+      "hard_checks": {
+        "assessment_contract_valid": true,
+        "evidence_item_ids_match_case_documents": true,
+        "evidence_item_count": 2
+      },
+      "metrics": {
+        "transport_seconds": 42.881299615997705,
+        "input_tokens": 783,
+        "output_tokens": 157,
+        "inference_seconds": 41.743,
+        "reasoning_effort": "low"
+      }
+    },
+    {
+      "case": "AMBIGUOUS",
+      "evidence_character": "mixed and insufficiently directional evidence",
+      "evidence": [
+        {
+          "evidence_document_id": "d951a279-4507-45cf-a174-4ed5c4d72703",
+          "text": "Synthetic evidence: quarterly revenue was approximately flat year over year, operating margin was stable, and management maintained existing full-year guidance.",
+          "source_name": "Synthetic Ambiguous Evidence 1"
+        },
+        {
+          "evidence_document_id": "f4bce983-755d-4466-aba0-f638ea88eb35",
+          "text": "Synthetic evidence: management reported mixed regional demand and stated that near-term visibility remains limited, with no clear change in overall customer order trends.",
+          "source_name": "Synthetic Ambiguous Evidence 2"
+        }
+      ],
+      "assessment": {
+        "contract_id": "56816679-fbea-41ee-bda4-242aa26e8f6a",
+        "flow_id": "df3dcaae-d557-4139-8cd0-ed090a0ddba4",
+        "source": "TAA",
+        "destination": "PMA",
+        "created_at": "2026-09-01T15:18:21.580811Z",
+        "status": "FINAL",
+        "parent_ids": [],
+        "configuration_version_id": "c71d18d2-6fe3-48b8-9097-da58f4787c0c",
+        "metadata": {},
+        "assessment_id": "d29fb284-b923-499e-b598-9d9725562447",
+        "financial_instrument_id": "1cba1ac1-25a3-48ed-a4fd-73ad13afddff",
+        "assessment_type": "CANDIDATE",
+        "horizon": "TACTICAL",
+        "summary": "The available data indicate a flat price trend with no momentum or volatility, and the limited evidence suggests stable revenue and uncertain demand outlook. Overall, the assessment is neutral with no clear directional signal.",
+        "confidence": 0.3,
+        "valid_until": "2026-09-01T16:18:21.580667Z",
+        "evidence_item_ids": [
+          "d951a279-4507-45cf-a174-4ed5c4d72703",
+          "f4bce983-755d-4466-aba0-f638ea88eb35"
+        ],
+        "tss_measurement_set_ids": [
+          "39e25fc6-2145-45b1-ac3d-3ec7259e3235"
+        ]
+      },
+      "hard_checks": {
+        "assessment_contract_valid": true,
+        "evidence_item_ids_match_case_documents": true,
+        "evidence_item_count": 2
+      },
+      "metrics": {
+        "transport_seconds": 34.62033797299955,
+        "input_tokens": 777,
+        "output_tokens": 98,
+        "inference_seconds": 32.921,
+        "reasoning_effort": "low"
+      }
+    }
+  ],
+  "confidence": {
+    "positive": 0.6,
+    "negative": 0.55,
+    "ambiguous": 0.3
+  },
+  "calibration_check": {
+    "ambiguous_not_higher_than_both_directional_cases": true
+  },
+  "qwen_step04e_baseline": {
+    "confidence": {
+      "positive": 0.6,
+      "negative": 0.4,
+      "ambiguous": 0.5
+    },
+    "calibration_check": {
+      "ambiguous_not_higher_than_both_directional_cases": false
+    }
+  }
+}

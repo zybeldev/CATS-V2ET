@@ -21,7 +21,7 @@ class PublicEvidenceRequest:
 
 
 class PublicWebEvidenceSource:
-    """Minimal public-web evidence ingestion boundary for V2E.
+    """Minimal public-web evidence ingestion boundary for V2ET.
 
     This adapter fetches public text, strips simple HTML markup, and returns an
     EvidenceDocument with source metadata. Retrieved content is evidence only;

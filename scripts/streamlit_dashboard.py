@@ -62,6 +62,45 @@ st.markdown(
         font-weight: 700;
         margin: 0;
     }
+    .cats-report-subtitle {
+        margin: 0.16rem 0 0 0;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #667085;
+    }
+    .cats-market-chart {
+        margin-top: 0.85rem;
+        padding: 0.7rem 0.7rem 0.55rem 0.7rem;
+        background: #ffffff;
+        border: 1px solid #e3e5e8;
+        border-radius: 9px;
+    }
+    .cats-market-chart-title {
+        margin: 0 0 0.45rem 0;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: #40454d;
+    }
+    .cats-market-chart svg {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+    .cats-signal-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        margin-top: 0.45rem;
+    }
+    .cats-signal-chip {
+        padding: 0.18rem 0.42rem;
+        border: 1px solid #d8dde4;
+        border-radius: 5px;
+        background: #f8fafc;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 0.72rem;
+        color: #40454d;
+    }
     .cats-report-rule {
         width: min(100%, 42rem);
         border-top: 1px solid #5f6368;
@@ -515,6 +554,163 @@ def relative_state(left: Any, right: Any, *, above: str = "ABOVE", below: str = 
     return "AT"
 
 
+
+
+def _rolling_sma(values: list[float], window: int) -> list[float | None]:
+    result: list[float | None] = []
+    for index in range(len(values)):
+        if index + 1 < window:
+            result.append(None)
+        else:
+            sample = values[index + 1 - window : index + 1]
+            result.append(sum(sample) / window)
+    return result
+
+
+def candlestick_signal_chart_html(row: dict[str, Any]) -> str:
+    """Presentation-only candlestick view built from the same daily bars TSS used."""
+    source = row.get("price_bars") or []
+    bars: list[dict[str, Any]] = []
+    for item in source[-30:]:
+        try:
+            bars.append(
+                {
+                    "timestamp": str(item.get("timestamp") or ""),
+                    "open": float(item["open"]),
+                    "high": float(item["high"]),
+                    "low": float(item["low"]),
+                    "close": float(item["close"]),
+                }
+            )
+        except (KeyError, TypeError, ValueError):
+            continue
+
+    if len(bars) < 2:
+        return (
+            '<div class="cats-market-chart">'
+            '<div class="cats-market-chart-title">Candlestick Market View</div>'
+            '<div class="cats-report-note">OHLC history is not available for this observation.</div>'
+            '</div>'
+        )
+
+    width = 900.0
+    height = 300.0
+    left = 54.0
+    right = 18.0
+    top = 18.0
+    bottom = 42.0
+    plot_width = width - left - right
+    plot_height = height - top - bottom
+
+    low_price = min(item["low"] for item in bars)
+    high_price = max(item["high"] for item in bars)
+    span = max(high_price - low_price, max(abs(high_price), 1.0) * 0.001)
+    low_price -= span * 0.04
+    high_price += span * 0.04
+    span = high_price - low_price
+
+    def y(value: float) -> float:
+        return top + (high_price - value) / span * plot_height
+
+    step = plot_width / len(bars)
+    body_width = max(3.0, min(14.0, step * 0.58))
+    svg: list[str] = [
+        f'<svg viewBox="0 0 {width:.0f} {height:.0f}" role="img" '
+        'aria-label="Daily candlestick chart with TSS short and long moving averages">'
+    ]
+
+    for fraction in (0.0, 0.5, 1.0):
+        price = high_price - fraction * span
+        ypos = top + fraction * plot_height
+        svg.append(
+            f'<line x1="{left:.1f}" y1="{ypos:.1f}" x2="{width-right:.1f}" y2="{ypos:.1f}" '
+            'stroke="#e5e7eb" stroke-width="1" />'
+        )
+        svg.append(
+            f'<text x="{left-7:.1f}" y="{ypos+4:.1f}" text-anchor="end" '
+            'font-size="11" fill="#667085">'
+            f'${price:,.2f}</text>'
+        )
+
+    for index, item in enumerate(bars):
+        xpos = left + step * (index + 0.5)
+        open_y = y(item["open"])
+        close_y = y(item["close"])
+        high_y = y(item["high"])
+        low_y = y(item["low"])
+        rising = item["close"] >= item["open"]
+        color = "#16834b" if rising else "#c63f3f"
+        body_y = min(open_y, close_y)
+        body_height = max(1.2, abs(close_y - open_y))
+        svg.append(
+            f'<line x1="{xpos:.2f}" y1="{high_y:.2f}" x2="{xpos:.2f}" y2="{low_y:.2f}" '
+            f'stroke="{color}" stroke-width="1.2" />'
+        )
+        svg.append(
+            f'<rect x="{xpos-body_width/2:.2f}" y="{body_y:.2f}" width="{body_width:.2f}" '
+            f'height="{body_height:.2f}" fill="{color}" rx="0.6" />'
+        )
+
+    closes = [item["close"] for item in bars]
+    for averages, color, label in (
+        (_rolling_sma(closes, 5), "#315f9e", "Short SMA"),
+        (_rolling_sma(closes, 20), "#9b6b27", "Long SMA"),
+    ):
+        points = []
+        for index, value in enumerate(averages):
+            if value is None:
+                continue
+            xpos = left + step * (index + 0.5)
+            points.append(f"{xpos:.2f},{y(value):.2f}")
+        if len(points) >= 2:
+            svg.append(
+                f'<polyline points="{" ".join(points)}" fill="none" stroke="{color}" '
+                'stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />'
+            )
+
+    label_indices = sorted({0, len(bars) // 2, len(bars) - 1})
+    for index in label_indices:
+        timestamp = bars[index]["timestamp"]
+        label = timestamp[:10] if len(timestamp) >= 10 else timestamp
+        xpos = left + step * (index + 0.5)
+        svg.append(
+            f'<text x="{xpos:.2f}" y="{height-13:.1f}" text-anchor="middle" '
+            f'font-size="11" fill="#667085">{escape(label)}</text>'
+        )
+
+    svg.extend(
+        [
+            f'<line x1="{left:.1f}" y1="{height-30:.1f}" x2="{left+18:.1f}" y2="{height-30:.1f}" '
+            'stroke="#315f9e" stroke-width="2" />',
+            f'<text x="{left+24:.1f}" y="{height-26:.1f}" font-size="11" fill="#667085">Short SMA</text>',
+            f'<line x1="{left+112:.1f}" y1="{height-30:.1f}" x2="{left+130:.1f}" y2="{height-30:.1f}" '
+            'stroke="#9b6b27" stroke-width="2" />',
+            f'<text x="{left+136:.1f}" y="{height-26:.1f}" font-size="11" fill="#667085">Long SMA</text>',
+            '</svg>',
+        ]
+    )
+
+    signal_price = row.get("latest_trade_price")
+    if signal_price is None:
+        signal_price = row.get("tss_last_price")
+    signals = [
+        f"Return {signal_direction(row.get('return_1_period'))}",
+        f"Momentum {signal_direction(row.get('momentum'))}",
+        f"Price vs Short SMA {relative_state(signal_price, row.get('sma_short'))}",
+        f"Short SMA vs Long {relative_state(row.get('sma_short'), row.get('sma_long'))}",
+    ]
+    chips = "".join(
+        f'<span class="cats-signal-chip">{escape(value)}</span>' for value in signals
+    )
+    return (
+        '<div class="cats-market-chart">'
+        '<div class="cats-market-chart-title">Candlestick Market View + TSS Signals</div>'
+        + "".join(svg)
+        + f'<div class="cats-signal-strip">{chips}</div>'
+        + '</div>'
+    )
+
+
 def report_row(
     label: str,
     value: Any,
@@ -541,6 +737,7 @@ def report_card(
         tuple[str, Any, str | None] | tuple[str, Any, str | None, bool]
     ],
     *,
+    subtitle: str | None = None,
     narrative_label: str | None = None,
     narrative: str | None = None,
     note: str | None = None,
@@ -550,8 +747,10 @@ def report_card(
     parts = [
         f'<div class="cats-report-card {escape(css_class)}">',
         f'<div class="cats-report-title">{escape(title)}</div>',
-        '<div class="cats-report-rule"></div>',
     ]
+    if subtitle:
+        parts.append(f'<div class="cats-report-subtitle">{escape(subtitle)}</div>')
+    parts.append('<div class="cats-report-rule"></div>')
     for row in rows:
         if len(row) == 4:
             label, value, secondary, highlight = row
@@ -1158,6 +1357,8 @@ def render_operating_loop_activity() -> None:
                 ("Volatility", "—" if row.get("annualized_volatility") is None else f"{float(row['annualized_volatility']) * 100:.2f}%", None),
                 ("Average Volume", "—" if row.get("average_volume") is None else f"{float(row['average_volume']):,.0f}", None),
             ],
+            subtitle="Raw Quantitative Market Measurements",
+            extra_html=candlestick_signal_chart_html(row),
             note=None if latest_secondary else "Latest-trade endpoint unavailable; TSS daily measurements remain visible.",
         )
 
@@ -1174,9 +1375,10 @@ def render_operating_loop_activity() -> None:
                 ("Annualized Volatility", "—" if row.get("annualized_volatility") is None else f"{float(row['annualized_volatility']) * 100:.2f}%", None),
                 ("Liquidity Proxy", usd(row.get("liquidity_proxy")), None),
             ],
+            subtitle="Deterministic Trading Signals Derived from Market Measurements",
             note=(
-                "Deterministic TSS classification of current market measurements. This is not a BUY/SELL "
-                "recommendation; TAA interprets these signals in financial context, with or without new news."
+                "Deterministic trading signals derived from TSS market measurements. Not a BUY/SELL "
+                "recommendation; TAA interprets these signals in financial context."
             ),
         )
 
@@ -1219,6 +1421,18 @@ if loop_running:
     with st.expander("Main loop technical log", expanded=False):
         st.code(tail_runtime_log(project_root) or "No runtime log output yet.", language="text")
 
+def assessment_outlook(summary) -> str | None:
+    """Extract the explicit TAA Outlook statement from Assessment.summary."""
+    for line in str(summary or "").splitlines():
+        line = line.strip()
+        if not line.lower().startswith("outlook:"):
+            continue
+        value = line.split(":", 1)[1].strip().upper()
+        if value in {"FAVORABLE", "NEUTRAL", "ADVERSE"}:
+            return value
+    return None
+
+
 @st.fragment(run_every=5)
 def render_taa_monitoring() -> None:
     status = read_main_loop_status(project_root)
@@ -1231,10 +1445,8 @@ def render_taa_monitoring() -> None:
         report_card(
             f"TAA | Live Monitoring Assessment — {instrument_label(assessment.get('symbol') or selected_symbol)}",
             [
-                ("Status", assessment.get("status") or "—", None),
-                ("Mode", assessment.get("mode") or "MONITORING_ONLY", None),
                 ("Horizon", assessment.get("horizon") or "—", None),
-                ("Assessment", assessment.get("assessment_type") or "—", None),
+                ("Outlook", assessment_outlook(assessment.get("summary")) or "—", None),
                 ("Confidence", "—" if confidence is None else f"{float(confidence) * 100:.2f}%", None),
                 ("Assessment Date Time", operator_timestamp(assessment.get("assessed_at") or status.get("last_taa_assessment_at")), None, live_value_changed(f"taa:assessment_time:{assessment.get('symbol') or selected_symbol}", assessment.get("assessed_at") or status.get("last_taa_assessment_at")) if main_loop_is_running(project_root) else False),
                 ("Valid Until", operator_timestamp(assessment.get("valid_until")), None),
@@ -1306,6 +1518,8 @@ else:
 
 # Load the principal human-readable projections once.
 taa = model.taa_reasoning(selected_flow) if selected_flow else {}
+taa_record = model.first_row_for_flow("TAA_Assessment", selected_flow) if selected_flow else {}
+taa_record = taa_record or {}
 transition = model.selected_decision_transition(selected_flow) if selected_flow else []
 execution = model.execution_snapshot(selected_flow) if selected_flow else {}
 
@@ -1416,31 +1630,21 @@ if selected_flow:
 
 # --- TAA reasoning is the principal AI-facing capstone view. ---
 if taa:
-    taa_note = None
-    if taa.get("normalized_historical_shape"):
-        taa_note = (
-            "Historical flow normalization: the earlier persisted assessment_type field "
-            f"contained {taa.get('raw_assessment_type')}. The read-only UI presents that "
-            "value as the horizon and identifies the record as a candidate assessment."
-        )
     taa_flow_title = "TAA | Current Flow Assessment" if selected_is_latest else "TAA | Historical Flow Assessment"
+    persisted_outlook = assessment_outlook(taa.get("summary"))
     report_card(
         taa_flow_title,
         [
             ("Horizon", display_status(taa.get("horizon")), None),
-            ("Assessment", display_status(taa.get("assessment_type")), None),
+            ("Outlook", "NOT RECORDED" if persisted_outlook in {None, ""} else persisted_outlook, None),
             ("Confidence", pct(taa.get("confidence")), None),
-            ("Status", display_status(taa.get("status")), None),
             ("Assessment Date Time", recorded_operator_timestamp(taa_timestamp), None),
         ],
         extra_html=assessment_narrative_sections_html(taa.get("summary")),
         note=(
-            (taa_note + " " if taa_note else "")
-            + (
-                "Current/latest full-cycle TAA assessment supplied to PMA; distinct from live monitoring above."
-                if selected_is_latest
-                else "Historical full-cycle TAA assessment supplied to PMA; distinct from live monitoring above."
-            )
+            "Current/latest full-cycle TAA assessment supplied to PMA; distinct from live monitoring above."
+            if selected_is_latest
+            else "Historical full-cycle TAA assessment supplied to PMA; distinct from live monitoring above."
         ),
     )
 else:

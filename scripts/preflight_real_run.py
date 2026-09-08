@@ -20,7 +20,7 @@ def main():
     run([sys.executable, "scripts/alpaca_smoke_test.py"])
     run([sys.executable, "scripts/openai_smoke_test.py"])
 
-    print("CATS V2E external preflight: PASS")
+    print("CATS V2ET external preflight: PASS")
     print("System is ready for the first real PAPER end-to-end flow.")
 
 

@@ -13,7 +13,7 @@ from cats.runtime.real_run import require_real_run_ready
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Recover one existing CATS V2E production PAPER flow without resubmitting orders."
+        description="Recover one existing CATS V2ET production PAPER flow without resubmitting orders."
     )
     parser.add_argument("--flow-id", required=True)
     parser.add_argument("--confirm-paper", action="store_true")

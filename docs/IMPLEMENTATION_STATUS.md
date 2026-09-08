@@ -1,7 +1,7 @@
-# CATS V2E Implementation Status
+# CATS V2ET Implementation Status
 
 ## Completed through Construction Step 18
-- complete V2E authority chain
+- complete V2ET authority chain
 - SQL-backed persistence
 - broker reconciliation/recovery
 - TRACE provenance/lineage

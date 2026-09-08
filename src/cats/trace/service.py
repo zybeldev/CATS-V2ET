@@ -48,7 +48,7 @@ class TraceEvent:
 
 
 class TraceService:
-    """In-memory trace facade for the V2E vertical slice.
+    """In-memory trace facade for the V2ET vertical slice.
 
     Repository persistence can replace this facade without changing the
     provenance/lineage contract.

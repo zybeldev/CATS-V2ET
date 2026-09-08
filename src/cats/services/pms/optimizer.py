@@ -35,7 +35,7 @@ class EquityOptimizationConstraints:
 
 
 class DeterministicEquityOptimizer:
-    """Small deterministic constrained allocator for the V2E capstone.
+    """Small deterministic constrained allocator for the V2ET capstone.
 
     It converts positive candidate scores into target weights while enforcing
     portfolio-level exposure and per-position concentration constraints.

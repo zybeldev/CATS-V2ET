@@ -1,4 +1,4 @@
-# CATS V2E — External Run Checklist
+# CATS V2ET — External Run Checklist
 
 Use this checklist before the first actual Alpaca PAPER transaction.
 
@@ -17,14 +17,14 @@ Create `.env` from `.env.local.example`.
 Required values:
 
 - `CATS_ENVIRONMENT=PAPER`
-- `CATS_DATABASE_URL=postgresql+psycopg://cats:cats@localhost:5432/cats_v2e`
+- `CATS_DATABASE_URL=postgresql+psycopg://cats:cats@localhost:5432/cats_v2et`
 - `ALPACA_API_KEY`
 - `ALPACA_API_SECRET`
 - `ALPACA_PAPER_BASE_URL=https://paper-api.alpaca.markets`
 - `OPENAI_API_KEY`
 - `OPENAI_MODEL`
 
-Do not place production broker credentials in this V2E capstone profile.
+Do not place production broker credentials in this V2ET capstone profile.
 
 ## C. PostgreSQL
 

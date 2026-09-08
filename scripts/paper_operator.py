@@ -12,7 +12,7 @@ def run(cmd: list[str]) -> None:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Fail-closed operator entrypoint for CATS V2E PAPER."
+        description="Fail-closed operator entrypoint for CATS V2ET PAPER."
     )
     sub = parser.add_subparsers(dest="command", required=True)
 

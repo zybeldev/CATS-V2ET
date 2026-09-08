@@ -1,4 +1,4 @@
-# CATS V2E External Integration Readiness
+# CATS V2ET External Integration Readiness
 
 Construction Step 10 prepares the codebase for real external integration.
 

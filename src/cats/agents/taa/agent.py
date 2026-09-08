@@ -17,7 +17,7 @@ from cats.services.tss import EquityMeasurements
 
 
 class TradingAssessmentAgent:
-    """V2E TAA implementation for evidence-grounded financial assessment.
+    """V2ET TAA implementation for evidence-grounded financial assessment.
 
     TAA interprets evidence and deterministic measurements. It cannot issue a
     PortfolioDecision, validation result, or execution action.
@@ -86,17 +86,25 @@ class TradingAssessmentAgent:
                 "retrieved_at as a substitute for publication/source date. If a material "
                 "source date is unknown, stale for the horizon, or appears to be in the "
                 "future, reflect that uncertainty in the summary and confidence. Return "
-                "exactly one JSON object with: summary as a string; confidence as a "
-                "numeric value from 0.0 to 1.0 or null; and valid_for_minutes as a "
-                "positive integer. Do not use words such as low, moderate, or high for "
-                "confidence."
+                "exactly one JSON object with: outlook as exactly one of FAVORABLE, "
+                "NEUTRAL, or ADVERSE; summary as a string; confidence as a numeric value "
+                "from 0.0 to 1.0 or null; and valid_for_minutes as a positive integer. "
+                "Outlook is TAA financial intelligence, not Portfolio intent and not a "
+                "BUY/SELL instruction. Do not use words such as low, moderate, or high "
+                "for confidence."
             ),
             context=context,
         )
 
+        outlook = str(result.get("outlook", "")).strip().upper()
+        if outlook not in {"FAVORABLE", "NEUTRAL", "ADVERSE"}:
+            raise ValueError("TAA reasoning model must return outlook FAVORABLE, NEUTRAL, or ADVERSE")
+
         summary = str(result.get("summary", "")).strip()
         if not summary:
             raise ValueError("TAA reasoning model returned an empty assessment summary")
+
+        summary = f"Outlook: {outlook}\n\n{summary}"
 
         confidence_raw = result.get("confidence")
         confidence = None if confidence_raw is None else float(confidence_raw)

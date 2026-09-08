@@ -1,20 +1,20 @@
 services:
   postgres:
     image: postgres:16
-    container_name: cats-v2e-postgres
+    container_name: cats-v2et-postgres
     environment:
-      POSTGRES_DB: cats_v2e
+      POSTGRES_DB: cats_v2et
       POSTGRES_USER: cats
       POSTGRES_PASSWORD: cats
     ports:
       - "5432:5432"
     volumes:
-      - cats_v2e_pgdata:/var/lib/postgresql/data
+      - cats_v2et_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U cats -d cats_v2e"]
+      test: ["CMD-SHELL", "pg_isready -U cats -d cats_v2et"]
       interval: 5s
       timeout: 3s
       retries: 20
 
 volumes:
-  cats_v2e_pgdata:
+  cats_v2et_pgdata:

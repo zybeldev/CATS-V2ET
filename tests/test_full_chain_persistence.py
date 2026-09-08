@@ -62,6 +62,7 @@ class FakeEmbeddings:
 class FakeReasoning:
     def reason(self, *, task, context):
         return {
+            "outlook": "FAVORABLE",
             "summary": "positive attractive opportunity supported by retrieved evidence",
             "confidence": 0.8,
             "valid_for_minutes": 60,

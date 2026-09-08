@@ -170,9 +170,25 @@ class CatsMainOperatingLoop:
                 lookback_days=self.config.market_lookback_days,
             )
             measurements = self.tss.calculate_equity_measurements(bars)
+            price_bars = [
+                {
+                    "timestamp": getattr(bar, "timestamp", None),
+                    "open": getattr(bar, "open", None),
+                    "high": getattr(bar, "high", None),
+                    "low": getattr(bar, "low", None),
+                    "close": bar.close,
+                    "volume": bar.volume,
+                }
+                for bar in bars[-40:]
+                if all(
+                    getattr(bar, field, None) is not None
+                    for field in ("timestamp", "open", "high", "low")
+                )
+            ]
             rows.append(
                 {
                     "symbol": symbol,
+                    "price_bars": price_bars,
                     "latest_trade_price": latest_price,
                     "latest_trade_at": latest_trade_at,
                     "tss_last_price": measurements.last_price,

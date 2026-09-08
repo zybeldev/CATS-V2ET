@@ -45,7 +45,7 @@ class AuditReportGenerator:
         path.parent.mkdir(parents=True, exist_ok=True)
 
         lines = [
-            "# CATS V2E PAPER Run Audit Report",
+            "# CATS V2ET PAPER Run Audit Report",
             "",
             f"- Flow ID: `{report['flow_id']}`",
             f"- Verification: **{report['verification_status']}**",

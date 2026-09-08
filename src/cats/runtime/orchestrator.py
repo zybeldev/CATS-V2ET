@@ -18,7 +18,7 @@ class VerticalSliceResult:
     completed: bool
 
 
-class V2EOrchestrator:
+class V2ETOrchestrator:
     """Minimal end-to-end coordinator. It routes contracts but owns no financial authority."""
 
     def __init__(self, *, pma: PortfolioManagementAgent, sys_validator: SystemValidator,
